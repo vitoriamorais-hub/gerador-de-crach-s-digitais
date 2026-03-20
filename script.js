@@ -4,9 +4,9 @@ const ctx = canvas.getContext("2d");
 const canvasSize = 600;
 const photoRadius = 280;
 
-// CARREGAMENTO DE IMAGENS (Nomes conforme seu GitHub)
-const kikkerIconCircle = new Image();
-kikkerIconCircle.src = "kikker-icon-circle.png"; 
+// Imagens Base (certifique-se que os nomes no GitHub estão idênticos)
+const kikkerIcon = new Image();
+kikkerIcon.src = "kikker-icon-circle.png"; 
 
 const backgroundCircuit = new Image();
 backgroundCircuit.src = "background-circuit.png"; 
@@ -14,15 +14,11 @@ backgroundCircuit.src = "background-circuit.png";
 let userPhoto = new Image();
 let photoLoaded = false;
 
-// Evento de Upload da Foto do Colaborador
 document.getElementById("uploadFoto").addEventListener("change", function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
         userPhoto = new Image();
-        userPhoto.onload = () => { 
-            photoLoaded = true;
-            console.log("Foto do colaborador carregada!");
-        };
+        userPhoto.onload = () => { photoLoaded = true; };
         userPhoto.src = event.target.result;
     };
     if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
@@ -37,10 +33,9 @@ function generateProfile() {
     const nome = document.getElementById("nomeColaborador").value || "Nome do Colaborador";
     const cargo = document.getElementById("cargoColaborador").value || "Marketing";
 
-    // 1. Limpar e desenhar Fundo
     ctx.clearRect(0, 0, canvasSize, canvasSize);
-    
-    // Desenha o fundo de circuito se ele existir, senão usa branco
+
+    // 1. Fundo (Circuitos ou Branco)
     if (backgroundCircuit.complete && backgroundCircuit.naturalWidth !== 0) {
         ctx.drawImage(backgroundCircuit, 0, 0, canvasSize, canvasSize);
     } else {
@@ -48,53 +43,49 @@ function generateProfile() {
         ctx.fillRect(0, 0, canvasSize, canvasSize);
     }
 
-    // 2. Desenhar a FOTO em MÁSCARA CIRCULAR
+    // 2. Foto com Máscara Circular
     ctx.save();
     ctx.beginPath();
-    ctx.arc(300, 300, photoRadius, 0, Math.PI * 2); 
-    ctx.closePath();
-    ctx.clip(); 
-
-    // Ajuste da foto (Cover)
+    ctx.arc(300, 300, photoRadius, 0, Math.PI * 2);
+    ctx.clip();
     const ratio = Math.max(canvasSize / userPhoto.width, canvasSize / userPhoto.height);
     const w = userPhoto.width * ratio;
     const h = userPhoto.height * ratio;
     ctx.drawImage(userPhoto, (canvasSize - w) / 2, (canvasSize - h) / 2, w, h);
-    ctx.restore(); 
+    ctx.restore();
 
-    // 3. BARRA DE IDENTIFICAÇÃO (Cinza Escuro)
-    const barX = 120; 
-    const barY = 470; 
-    const barW = 400; 
-    const barH = 110; 
+    // 3. Barra de Identificação (Estilo Pílula)
+    const barX = 130;
+    const barY = 480;
+    const barW = 340;
+    const barH = 90;
 
-    ctx.fillStyle = "rgba(45, 45, 45, 0.95)"; 
+    ctx.fillStyle = "rgba(60, 60, 60, 0.9)";
     ctx.beginPath();
-    ctx.roundRect(barX, barY, barW, barH, barH / 2); 
+    ctx.roundRect(barX, barY, barW, barH, 45); // Totalmente arredondada
     ctx.fill();
 
-    // 4. ÍCONE DA KIKKER (Esquerda da Barra)
-    if (kikkerIconCircle.complete && kikkerIconCircle.naturalWidth !== 0) {
-        ctx.drawImage(kikkerIconCircle, barX + 5, barY + 5, 100, 100);
+    // 4. Ícone da Kikker (Posicionado à esquerda na barra)
+    if (kikkerIcon.complete && kikkerIcon.naturalWidth !== 0) {
+        ctx.drawImage(kikkerIcon, barX + 5, barY + 5, 80, 80);
     }
 
-    // 5. TEXTOS (Direita da Barra)
-    const textStartX = barX + 115;
+    // 5. Textos (Alinhados ao lado do ícone)
     ctx.textAlign = "left";
-
-    // Nome (Branco)
-    ctx.font = "bold 28px sans-serif";
     ctx.fillStyle = "white";
-    ctx.fillText(nome, textStartX, barY + 48); 
+    
+    // Nome
+    ctx.font = "bold 24px sans-serif";
+    ctx.fillText(nome, barX + 95, barY + 40);
 
-    // Cargo (Cinza Claro)
-    ctx.font = "20px sans-serif";
+    // Cargo
+    ctx.font = "16px sans-serif";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText(cargo, textStartX, barY + 82); 
+    ctx.fillText(cargo, barX + 95, barY + 65);
 
     // 6. Ativar Link de Download
     const link = document.getElementById("download");
     link.href = canvas.toDataURL("image/png");
     link.style.display = "inline-block";
-    link.innerText = "Baixar Perfil";
+    link.innerText = "Baixar Crachá Digital";
 }
