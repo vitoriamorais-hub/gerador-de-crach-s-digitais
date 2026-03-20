@@ -2,42 +2,41 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Perfil - Kikker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <div class="card">
-        <h1>Gerador de Perfil Kikker</h1>
-        <p>Crie o crachá digital dos colaboradores rapidamente.</p>
-        <hr>
+    <h1>Gerador de Perfil Kikker</h1>
+    <p>Crie o crachá digital dos colaboradores de forma padronizada.</p>
+    <hr>
 
-        <div class="main-content">
-            <div class="controls">
-                <div class="field">
-                    <label>1. Foto do Colaborador</label>
-                    <input type="file" id="uploadFoto" accept="image/*">
-                </div>
-                
-                <div class="field">
-                    <label>2. Nome Completo</label>
-                    <input type="text" id="nomeColaborador" placeholder="Digite o nome...">
-                </div>
-                
-                <div class="field">
-                    <label>3. Cargo / Setor</label>
-                    <input type="text" id="cargoColaborador" placeholder="Digite o cargo...">
-                </div>
-                
-                <button onclick="generateProfile()" class="btn-gerar">Gerar Imagem de Perfil</button>
-                <br>
-                <a id="download" download="perfil-colaborador.png" class="btn-download" style="display:none;"></a>
+    <div class="main-content">
+        <div class="controls">
+            <div class="field">
+                <label>1. Foto do Colaborador</label>
+                <input type="file" id="uploadFoto" accept="image/*">
             </div>
+            
+            <div class="field">
+                <label>2. Nome Completo</label>
+                <input type="text" id="nomeColaborador" placeholder="Ex: Vitória Rafaela">
+            </div>
+            
+            <div class="field">
+                <label>3. Cargo / Setor</label>
+                <input type="text" id="cargoColaborador" placeholder="Ex: Marketing">
+            </div>
+            
+            <button onclick="generateProfile()" class="btn-gerar">Gerar Crachá Digital</button>
+            <a id="download" download="cracha-kikker.png" class="btn-download" style="display:none;">Baixar Imagem Pronta</a>
+        </div>
 
-            <div class="preview-area">
-                <canvas id="canvas" width="600" height="600"></canvas>
-            </div>
+        <div class="preview-area">
+            <label style="display:block; margin-bottom:10px;">Pré-visualização</label>
+            <canvas id="canvas" width="600" height="600"></canvas>
         </div>
     </div>
 </div>
