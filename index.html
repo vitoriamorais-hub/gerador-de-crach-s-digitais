@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Perfil - Colaboradores</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>Gerador de Perfil Kikker</h1>
+        <p>Insira a foto e os dados do colaborador abaixo.</p>
+        <hr>
+
+        <div class="main-content">
+            <div class="controls">
+                <label>1. Foto do Colaborador</label>
+                <input type="file" id="uploadFoto" accept="image/*">
+                
+                <label>2. Nome Completo</label>
+                <input type="text" id="nomeColaborador" placeholder="Ex: Vitória Morais">
+                
+                <label>3. Cargo / Setor</label>
+                <input type="text" id="cargoColaborador" placeholder="Ex: Marketing">
+                
+                <br><br>
+                <button onclick="generateProfile()" class="btn-gerar">Gerar Imagem de Perfil</button>
+                
+                <br><br>
+                <a id="download" download="perfil-kikker.png" class="btn-download" style="display:none;">Baixar Imagem Pronta</a>
+            </div>
+
+            <div class="preview-area">
+                <canvas id="canvas" width="600" height="600"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
